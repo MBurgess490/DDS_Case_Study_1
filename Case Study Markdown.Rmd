@@ -1,0 +1,63 @@
+---
+title: "EDA Project 1"
+author: "Michael Burgess & Robert Pollock"
+date: "2/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+##Introduction
+
+We were asked by our clients, the CEO and CFO of Budweiser, to examine data related to different craft beers and breweries located throughout the United states. The data contains 2,410 beers and 558 breweries. In this presentation we will answer 7 questions that were asked by our clients.
+
+```{r}
+#data import
+beers <- read.csv(choose.files(),header = T,sep = ",")
+breweries <- read.csv(choose.files(),header = T,sep = ",")
+```
+
+##Question 1
+
+How many breweries are present in each state?
+
+```{r}
+table(breweries$State)
+```
+
+##Question 2
+Merge beer data with breweries
+
+```{r}
+merged_df <- left_join(beers, breweries, by = c("Brewery_id" = "Brew_ID"))
+names(merged_df)[names(merged_df) == "Name.x"] <- "Beer Name"
+names(merged_df)[names(merged_df) == "Name.y"] <- "Brewery Name"
+final_df <- merged_df[order(merged_df[,10], merged_df[9], merged_df[8], merged_df[1]),]
+
+head(final_df,6)
+tail(final_df,6)
+```
+
+#abv has 62 missing values and IBU has 1005 missing values for the merged DF, no other missing data or extra rows so join is fine
+#for the NA values how to compute?
+```{r}
+mean_ABV <- final_df %>% filter(!is.na(ABV)) %>% group_by(Style) %>% summarize(meanABV = mean(ABV), count = n()) %>% arrange(meanABV)
+mean_IBU <- final_df %>% filter(!is.na(IBU)) %>% group_by(Style) %>% summarize(meanIBU = mean(IBU), count = n()) %>% arrange(meanIBU)
+
+#loop to replace NA values in ABV
+for(i in final_df$ABV){
+  #if the value in the row is NA
+  if(is.na(i) == T){
+    #replace it with the mean value from the mean_ABV table by style
+    #replace NA with mean ABV where style in final_df equals style in mean ABV
+    #this is where I'm stuck
+  }
+}
+
+```
