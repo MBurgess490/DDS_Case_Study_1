@@ -313,3 +313,8 @@ top10beer_plot
 beer_by_state_plot
 
 ```
+
+##Conclusion
+
+In this analysis we reviewed 2,410 beers produced by 558 breweries around the United States. We plotted the number of breweries in each state and created a table showing those numbers as well. We filled in the missing IBU and ABV data with the mean IBU and ABV for each style so that we could perform further analysis. We then plotted the median ABV and IBU for each state.  We found that Colorado produced the beer with  the highest ABV and that Oregon produced the beer with the highest IBU. We showed the distribution of ABV and found that the median ABV is 5.65% with the minimum at 0.1% and the maximum at 12.8%. We found that there may be a weak relationship between ABV and IBU, but mostly for beers with an IBU between 50 and 100. Using kNN we were able to show that knowning the ABV and IBU of a given beer allowed us to predict whether that beer was an IPA or an Ale with roughly 91% accuracy. We then went on to plot the most frequently produced style of beer for each state, so that Budweiser can see what is the most popular beer style in their markets. 
+
