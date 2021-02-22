@@ -36,18 +36,13 @@ The table and chart below provides a brief look at the number of breweries per s
 ```{r}
 #create a dataframe to hold the frequency count of breweries in each state
 state_brew_count <- as.data.frame(table(breweries$State))
-
 #plot the count
 state_count_plot <-state_brew_count %>% ggplot(mapping = aes(x = Var1, y = Freq)) + geom_col(fill = "#13294b") + 
   geom_text(aes(label = Freq), position=position_dodge(width=0.9), vjust=-0.25) + 
   labs(title = "Count of Craft Breweries By State", x = "State", y = "Number of Breweries")
-
-
 #make the table more human readable
 names(state_brew_count)[names(state_brew_count) == "Var1"] <- "State"
 names(state_brew_count)[names(state_brew_count) == "Freq"] <- "Number of Breweries"
-
-
 state_brew_count
 state_count_plot
 ```
@@ -58,14 +53,11 @@ Merge beer data with breweries
 ```{r}
 #I used left join in case any of the beers didn't have brewery info, but this wasn't an issue. The only columns with NA's were in the IBU and ABV and they were in the data from the beginning
 merged_df <- left_join(beers, breweries, by = c("Brewery_id" = "Brew_ID"))
-
 #make column names more readable
 names(merged_df)[names(merged_df) == "Name.x"] <- "Beer Name"
 names(merged_df)[names(merged_df) == "Name.y"] <- "Brewery Name"
-
 #organize data by state, city, brewery name, and then beer name
 final_df <- merged_df[order(merged_df[,10], merged_df[9], merged_df[8], merged_df[1]),]
-
 head(final_df,6)
 tail(final_df,6)
 ```
@@ -79,35 +71,27 @@ Once the 2 data sets were joined, we found that there were 62 beers with missing
 #find mean ABV and mean IBU for each style and store it in a dataframe
 mean_ABV <- final_df %>% filter(!is.na(ABV)) %>% group_by(Style) %>% summarize(meanABV = mean(ABV), count = n()) %>% arrange(meanABV)
 mean_IBU <- final_df %>% filter(!is.na(IBU)) %>% group_by(Style) %>% summarize(meanIBU = mean(IBU), count = n()) %>% arrange(meanIBU)
-
 #join the mean ABV rating to the main dataframe and drop count
 final_df <- left_join(final_df, mean_ABV, by = "Style")
 final_df <- final_df[,-c(12)]
-
 #join the mean IBU rating to the main dataframe and drop count
 final_df <- left_join(final_df, mean_IBU, by = "Style")
 final_df <- final_df[,-c(13)]
-
 #find row number of na values and store them
 abv_na_rows <- which(is.na(final_df$ABV) == T)
-
 #replace NA ABV values  with mean ABV values
 for(i in abv_na_rows){
   final_df$ABV[i] <- final_df$meanABV[i]
 }
-
 #find row numbers of na values for ibu and store them
 ibu_na_rows <- which(is.na(final_df$IBU) == T)
-
 #replace NA IBU values with mean IBU values
 for(i in ibu_na_rows){
   final_df$IBU[i] <- final_df$meanIBU[i]
 }
-
 #check to ensure that missing IBU values were not caused by code error
 missing_IBU <- final_df %>% filter(is.na(final_df$IBU))
 table(missing_IBU$Style)
-
 #remove meanABV and meanIBU columns since they are no longer needed
 final_df <- final_df[,-c(11, 12)]
 ```
@@ -118,11 +102,9 @@ Plot the median alcohol content and IBU for each state. Plot a bar chart to comp
 We found the median (middle) value for ABV and IBU for each state. The plots below show how each state compares to the others for both their median ABV and IBU. 
 
 ```{r}
-
 #create summary tables for median ABV and IBU values
 median_ABV <- final_df %>% group_by(State) %>% summarize(medianABV = median(ABV), count = n()) %>% arrange(State)
 median_IBU <- final_df %>% filter(!is.na(final_df$IBU)) %>% group_by(State) %>% summarize(medianIBU = median(IBU), count = n()) %>% arrange(State)
-
 #create plots and plot them one on top of the other
 median_ABVPlot <- median_ABV %>% ggplot(mapping = aes(x=State, y=medianABV, fill = State)) + geom_col(show.legend = FALSE) + ylab("Median ABV") + ggtitle("Median ABV by State")
 median_IBUPlot <- median_IBU %>% ggplot(mapping = aes(x=State, y=medianIBU, fill = State)) + geom_col(show.legend = FALSE) + ylab("Median IBU") + ggtitle("Median IBU by State")
@@ -147,12 +129,10 @@ The summary shows that the minimum ABV is 0.1%, the maximum is 12.8%, and the me
 ```{r}
 #print summary statitics for ABV column
 summary(final_df$ABV)
-
 #plot ABV distribution using histogram and boxplot and then plot them side by side. We used Budweiser brand colors for these plots.
 abv_hist <- final_df %>% ggplot(mapping = aes(x=ABV)) + geom_histogram(fill="#c8102e") + labs(y = "Count of Beers", title = "Distribution of ABV")
 abv_box <- final_df %>% ggplot(mapping=aes(y=ABV)) + geom_boxplot(color="#13294b") + labs(title = "Distribution of ABV") + theme(axis.title.x=element_blank(),axis.text.x=element_blank(), axis.ticks.x=element_blank()) 
 plot_grid(abv_hist, abv_box, labels = "AUTO")
-
 ```
 ##Question 7
 Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot. Make your best judgment of a relationship and EXPLAIN your answer.
@@ -170,21 +150,16 @@ Budweiser would also like to investigate the difference with respect to IBU and 
 We first split the data into trainin and test sets using 70% of the data for training and 30% of the data for testing. We then ran tests using several different values of K and found that a K value of 5 provided the best accuracy. Using IBU and ABV our model could accurately predict whether a beer was an IPA or Ale with approx 91% accuracy. It predicted ales correctly approx 92% of the time and IPAs approx 87% correctly. 
 
 ```{r}
-
 #create empty column in the dataframe called Group and fill it with NA
 final_df['Group'] <- NA
-
 #find rows with IPA
 ipa_rows <- grep("IPA", final_df$Style, ignore.case = T)
-
 #replace NA in group with IPA for IPA rows
 for(i in ipa_rows){
   final_df$Group[i] <- "IPA"
 }
-
 #find rows with Ale
 ale_rows <- grep("Ale", final_df$Style, ignore.case = T)
-
 #replace NA in group with Ale for Ale rows (the is.NA is necessary to avoid over writing IPA styles that also had ale in the name)
 for(i in ale_rows){
   if(is.na(final_df$Group[i])==T){
@@ -192,18 +167,19 @@ for(i in ale_rows){
   }
 }
 
+#Set the remaining NAs in group as Other
+final_df$Group[is.na(final_df$Group)] <- "Other"
+
+
 #create a datafame that only contains beers in the Ale or IPA group
 ABV_data <- final_df %>% filter(Group == "Ale" | Group == "IPA")
 ABV_data <- ABV_data %>% filter(!is.na(IBU))
   
 #run several tests to find best value of k
 splitPerc = .70
-
 iterations = 500
 numks = 15
-
 masterAcc = matrix(nrow = iterations, ncol = numks)
-
 for(j in 1:iterations)
 {
   accs = data.frame(accuracy = numeric(15), k = numeric(15))
@@ -218,25 +194,17 @@ for(j in 1:iterations)
   }
   
 }
-
 MeanAcc = colMeans(masterAcc)
-
 plot(seq(1,numks,1),MeanAcc, type = "l")
-
 #The best K value was found to be 5. Run 1 knn test with k = 5 and return a sample confusion matrix
 classifications = knn(train[,c(3,4)],test[,c(3,4)],train$Group, prob = TRUE, k = 5)
 CM = confusionMatrix(table(classifications,test$Group))
-
 CM
-
-
 #run 100 knn tests with randomly set seed for sampling and knn = 5 to find average accuracy, sensitivity, and specificity 
 iterations = 100
-
 masterAcc = matrix(nrow = iterations)
 masterSen = matrix(nrow = iterations)
 masterSpe = matrix(nrow = iterations)
-
 for(j in 1:iterations)
 {
   set.seed(j)
@@ -250,15 +218,11 @@ for(j in 1:iterations)
   masterSen[j] = CM$byClass[1]
   masterSpe[j] = CM$byClass[2]
 }
-
 MeanAcc = colMeans(masterAcc)
-
 masterSen[is.na(masterSen)] = 0 
 MeanSen = colMeans(masterSen)
-
 masterSpe[is.na(masterSpe)] = 0
 MeanSpe = colMeans(masterSpe)
-
 MeanAcc
 MeanSen
 MeanSpe
@@ -271,47 +235,35 @@ For this question we made tables showing how many of each style of beer is being
 
 ```{r}
 #find how much of each style of beer is being produced in each state
-
 #create dataframe to hold table for count of each style of beer for each state
 freq_table <- as.data.frame(table(final_df$State, final_df$Style))
-
 #drop empty rows and 0 occurrence styles (these rows are in error, after this step and summing the frequency column, we do return the correct 2,405 rows)
 freq_table <- freq_table %>% filter(Var2 != "")
 freq_table <- freq_table %>% filter(Freq != 0)
-
 #arrange by state
 freq_table <- freq_table %>% arrange(Var1)
-
 #arrange beers by most being produced to least so we can find the most popular
 sum_popbeers <- freq_table %>% group_by(Var2) %>% summarize(sumFreq = sum(Freq))  %>% arrange(desc(sumFreq))
-
 #arrange the data for graphing
 sum_popbeers$Var2 <- factor(sum_popbeers$Var2, levels = sum_popbeers$Var2[order(-sum_popbeers$sumFreq)])
-
 #graph how many of each of the top 10 beers are being produced
 top10beer_plot <- sum_popbeers[1:10,] %>% ggplot(mapping = aes(x = Var2, y = sumFreq, fill = Var2)) + geom_col(show.legend = FALSE) + geom_text(aes(label = sumFreq),position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_brewer(palette="Paired") + labs(title = "Count of Top 10 Styles of Beers Being Produced", x = "Style of Beer", y = "Numbers of Beers of This Style")
-
 #create dataframe where each row reprents most popular beer style for each state
 mostpopbeer_state <- freq_table %>% group_by(Var1) %>% slice(which.max(Freq))
-
 #graph most popular beers by state
 beer_by_state_plot <- mostpopbeer_state %>% ggplot(mapping = aes(x = Var1, y = Freq, fill = Var2)) + geom_col() + geom_text(aes(label = Freq), position=position_dodge(width=0.9), vjust=-0.25) +
   scale_fill_brewer(palette="Paired") + labs(title = "Count of Most Popular Beers Being Produced By State", x = "State", y = "Numbers of Beers of This Style", fill = "Style of Beer")
-
 #make table column names more human friendly
 names(sum_popbeers)[names(sum_popbeers) == "Var2"] <- "Style of Beer"
 names(sum_popbeers)[names(sum_popbeers) == "sumFreq"] <- "Number Being Produced"
 sum_popbeers
-
 names(mostpopbeer_state)[names(mostpopbeer_state) == "Var1"] <- "State Name"
 names(mostpopbeer_state)[names(mostpopbeer_state) == "Var2"] <- "Style of Beer"
 names(mostpopbeer_state)[names(mostpopbeer_state) == "Freq"] <- "Number Being Produced"
 mostpopbeer_state
-
 top10beer_plot
 beer_by_state_plot
-
 ```
 
 ##Conclusion
