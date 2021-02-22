@@ -174,7 +174,11 @@ final_df$Group[is.na(final_df$Group)] <- "Other"
 #create a datafame that only contains beers in the Ale or IPA group
 ABV_data <- final_df %>% filter(Group == "Ale" | Group == "IPA")
 ABV_data <- ABV_data %>% filter(!is.na(IBU))
-  
+
+#plot the IBU and ABV data for ABV_Data
+ABV_data %>% ggplot(mapping = aes(x = IBU, y = ABV, color = Group)) + geom_point(position = "jitter") + ggtitle("Relationship Between IBU and ABV for Ales and IPAs Only") +
+  scale_color_manual(values = c("#c8102e","#13294b"))
+
 #run several tests to find best value of k
 splitPerc = .70
 iterations = 500
