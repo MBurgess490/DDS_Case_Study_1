@@ -115,7 +115,7 @@ plot_grid(median_ABVPlot, median_IBUPlot, labels = "AUTO", ncol = 1)
 Which state has the maximum alcholic (ABV) beer? Which state has the most bitter (IBU) beer?
 
 We found that the Lee Hill Series Vol. 5 - Belgian Style Quadrupel Ale from Upslope Brewing Company in Boulder, Colorado had the highest ABV at 12.8%. 
-We found that the Bitter Birch Imperial IPA from Astoria Brewing COmpany in Astoria, Oregon had the highest IBU at 138. 
+We found that the Bitter Bitch Imperial IPA from Astoria Brewing Company in Astoria, Oregon had the highest IBU at 138. 
 
 ```{r}
 #return row with max value for ABV and IBU
