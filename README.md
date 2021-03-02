@@ -1,4 +1,7 @@
 # Doing_Data_Science
 
-This project is a joint effort between Michael Burgess and Rob Pollock. We were tasked with answering 9 questions for the CEO and the CFO of Budweiser using the provided beer 
-and brewery datasets. These files can be found in the repo. The code for answering these questions is contained in the markdown file and the output is contained in the knitted html file. The code book contains information on the variables that were used throughout the markdown and html files. 
+This project is a joint effort between myself, Michael Burgess, and Rob Pollock. We were tasked with performing an exploratory data analysis of the provided beer and brewery datasets and answering 9 specific questions. The datasets and project criteria can be found in the Data Files folder. 
+
+The code for this analysis was written in an R markdown format and is also provided in an HTML knit output. These files along with the code book explaining our variables can be found in the R Markdown folder.
+
+In this case study our target audience was the CEO and CFO of Budweiser and the slides for our presentation can be found in the presentation Slides folder. 
