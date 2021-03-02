@@ -1,4 +1,4 @@
-# Doing_Data_Science
+# Doing Data Science Case Study 1
 
 This project is a joint effort between myself, Michael Burgess, and Rob Pollock. We were tasked with performing an exploratory data analysis of the provided beer and brewery datasets and answering 9 specific questions. The datasets and project criteria can be found in the Data Files folder. 
 
