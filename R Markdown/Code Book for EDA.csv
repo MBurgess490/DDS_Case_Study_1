@@ -1,0 +1,112 @@
+Variable Name,Sub-variables (if applicable),Variable Description,Class,# of Unique Values,Missing Data
+beers,,dataframe contaning beer information,,,
+,Name,Name of Beer,character,2305,0
+,Beer_ID,Unique Number Identifying Beer,integer,2410,0
+,ABV,Alcohol by Volume,number,75,62
+,IBU,International Bitterness Units - measure of beers bitterness,integer,108,1005
+,Brewery_id,Unique Number Identifying Producing Brewery,integer,558,0
+,Style,Category describing style of beer,character,100,0
+,Ounces,Serving size,number,7,0
+,,,,,
+breweries,,dataframe contaning brewery information,,,
+,Brew_ID,Unique Number Identifiying Brewery,integer,558,0
+,Name,Name of Brewery,character,551,0
+,City,City,character,384,0
+,State,State,character,51,0
+,,,,,
+state_brew_count,,dataframe containing count of breweries per state,,,
+,State,State,factor,51,0
+,Number of Breweries,"Count of the number of breweries for ""State""",integer,,0
+,,,,,
+state_count_plot,,Plot showing number of breweries per state,ggplot,,
+,,,,,
+merged_df,,"Joined dataframe of beers and breweries on Beer_ID/Brew_ID, contains all sub-variables from beers and breweries",,,
+,,,,,
+final_df,,"same as merged_df, but with missing values of ABV and IBU filled in. Has group column added for Question 7, knn classification.",,,
+,ABV,ABV from beers with missing data filled,number,103,0
+,IBU,IBU from beers with missing data filled,number,159,52
+,group,"Category for whether a beer is Ale, IPA, or other ",character,3,0
+,,,,,
+mean_ABV,Style,Category describing beer style,character,100,0
+,MeanABV,Mean ABV value for a given category,number,95,0
+,count,Number of beers that occur in a given style,integer,,0
+,,,,,
+mean_IBU,Style,Category describing beer style,character,91,0
+,MeanIBU,Mean IBU value for a given category,number,77,0
+,count,Number of beers that occur in a given style,integer,,0
+,,,,,
+missing_IBU,,Same as final_df but filtered to only hold beers with NA for IBU,,,
+,Style,Category describing beer style,character,9,
+,IBU,International Bitterness Units - measure of beers bitterness,number,,52
+,,,,,
+median_ABV,,dataframe containing median ABV values for each state,,,
+,State,State,character,51,0
+,medianABV,median ABV for each state,number,25,0
+,count,count of number of beers produced in each state,integer,,0
+,,,,,
+median_IBU,,dataframe containing median IBU values for each state,,,
+,State,State,character,51,0
+,medianIBU,median IBU for each state,number,39,0
+,count,count of number of beers produced in each state,integer,,0
+,,,,,
+median_ABVPlot,,plot for median ABV by state,ggplot,,
+,,,,,
+median_IBUPlot,,plot for median IBU by state,ggplot,,
+,,,,,
+abv_hist,,plot for histogram distribution of ABV,ggplot,,
+,,,,,
+abv_box,,plot for boxplot distribution of ABV,ggplot,,
+,,,,,
+ipa_rows,,vector of rows that contain IPA in their style description,integer,571,0
+,,,,,
+ale_rows,,vector of rows that contain Ale in their style description,integer,1020,0
+,,,,,
+ABV_data,,final_df filtered to contain only the beers with Ale or IPA in the Group column ,,,
+,,,,,
+splitPerc,,Used to define percentage of data that will be in training set,,,
+,,,,,
+iterations,,Number of times to run knn,,,
+,,,,,
+numks,,value for K,,,
+,,,,,
+masterAcc,,matrix to hold the accuracy value from each knn test,,,
+,,,,,
+accs,,dataframe holding the accuracy for knn test within the for loop,,,
+,,,,,
+trainIndices,,a random sample of index numbers for the training data set,,,
+,,,,,
+train,,dataframe holding data from ABV_data using rows contained in trainIndices,,,
+,,,,,
+test,,dataframe holding the remaining data from ABV-data not used in train,,,
+,,,,,
+classifications,,holds each of the knn results within the for loop,,,
+,,,,,
+CM,,confusion matrix for each of the knn tests within the for loop,,,
+,,,,,
+masterSen,,matrix to hold sensitvity results from each of the knn tests,,,
+,,,,,
+masterSpe,,matrix to hold specificity results from each of the knn tests,,,
+,,,,,
+meanAcc,,mean of masterAcc,,,
+,,,,,
+meanSpe,,mean of masterSpe,,,
+,,,,,
+meanSen,,mean of masterSen,,,
+,,,,,
+freq_table,,table holding count of each style of beer for each state,,,
+,Var1,State,factor,51,0
+,Var2,Beer Style,factor,99,0
+,Freq,Count of occurences of beer style by state,interger,,0
+,,,,,
+sum_popbeers,,dataframe to show most popular beers by using number produced,,,
+,Style of Beer,category for each style of beer,factor,99,0
+,Number Being Produced,number of each style being produced,integer,,0
+,,,,,
+mostpopbeer_state,,dataframe to hold the most produced beer in each state,,,
+,State Name,State,factor,51,0
+,Style of Beer,Category for each style of beer,factor,12,0
+,Number Being Produced,Number of beers being produced for the most popular style in each state,integer,,0
+,,,,,
+top10beer_plot,,plot showing the number of beers produced for the top 10 beers,ggplot,,
+,,,,,
+beer_by_state_plot,,plot showing the number of beers produced for the most popular style in each state,ggplot,,
