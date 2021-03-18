@@ -4,4 +4,8 @@ This project is a joint effort between myself, Michael Burgess, and Rob Pollock.
 
 The code for this analysis was written in an R markdown format and is also provided in an HTML knit output. These files along with the code book explaining our variables can be found in the R Markdown folder.
 
-In this case study our target audience was the CEO and CFO of Budweiser and the slides for our presentation can be found in the presentation Slides folder. The presentation slides also include links to Youtube video presentations of our slide decks.
+In this case study our target audience was the CEO and CFO of Budweiser and the slides for our presentation can be found in the presentation Slides folder. We also recorded our presentation and those videos can be found at the links below.
+
+Rob Pollock Presentation: https://youtu.be/cfpedy8zDYI
+
+Michael Burgess Presentation: https://youtu.be/GzZx2VFXty0
