@@ -6,6 +6,4 @@ The code for this analysis was written in an R markdown format and is also provi
 
 In this case study our target audience was the CEO and CFO of Budweiser and the slides for our presentation can be found in the presentation Slides folder. We also recorded our presentation and those videos can be found at the links below.
 
-Rob Pollock Presentation: https://youtu.be/cfpedy8zDYI
-
 Michael Burgess Presentation: https://youtu.be/GzZx2VFXty0
